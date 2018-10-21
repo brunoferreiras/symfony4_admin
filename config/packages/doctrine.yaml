@@ -26,6 +26,8 @@ doctrine:
             SonataUserBundle: ~
             FOSUserBundle: ~
             ApplicationSonataUserBundle: ~
+            ApplicationSonataMediaBundle: ~
+            SonataMediaBundle: ~
             App:
                 is_bundle: false
                 type: annotation
