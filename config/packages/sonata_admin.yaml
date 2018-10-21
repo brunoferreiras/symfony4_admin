@@ -3,7 +3,51 @@ sonata_admin:
     title_logo: img/admin/logo.png
     dashboard:
         blocks:
-            - { type: sonata.admin.block.admin_list, position: left }
+#            - { type: sonata.admin.block.admin_list, position: right }
+            -
+              position: top
+              class: col-md-12
+              type: sonata.block.service.text
+              settings:
+                  content: >
+                      <div class="jumbotron">
+                        <div class="container">
+                          <h1 class="text-center">
+                            Bem vindo ao Sonata Admin
+                          </h1>
+                        </div>
+                      </div>
+
+            -
+              position: top
+              class: col-md-4
+              type: sonata.admin.block.stats
+              settings:
+                  code: admin.post
+                  icon: fa-pencil
+                  text: Postagens publicadas
+                  color: bg-blue
+                  filters:
+                    status: { value: true }
+
+            - position: top
+              class: col-md-4
+              type: sonata.admin.block.stats
+              settings:
+                code: admin.category
+                icon: fa-tag
+                text: Categorias
+                color: bg-red
+
+            - position: top
+              class: col-md-4
+              type: sonata.admin.block.stats
+              settings:
+                code: admin.author
+                icon: fa-user
+                text: Autores
+                color: bg-green
+
 
     assets:
         extra_stylesheets:
@@ -16,3 +60,5 @@ sonata_block:
     blocks:
         sonata.admin.block.admin_list:
             contexts: [admin]
+        sonata.block.service.text:
+        sonata.admin.block.stats:
