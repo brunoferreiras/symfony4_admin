@@ -1,6 +1,6 @@
 <?php
-namespace App\Admin;
 
+namespace App\Admin;
 
 use App\Entity\Category;
 use App\Entity\Post;
@@ -32,19 +32,47 @@ class PostAdmin extends AbstractAdmin
 
     protected function configureFormFields(FormMapper $form)
     {
-        $form->add('category', ModelType::class, [
-            'class' => Category::class,
-            'property' => 'name',
-            'multiple' => true
-        ])
+        // Form with tabs
+        $form
+            ->tab('Conteudo')
+                ->with('Conteudo')
+                    ->add('title', TextType::class)
+                    ->add('content', TextareaType::class)
+                    ->add('status', CheckboxType::class, [
+                        'required' => false
+                    ])
+                ->end()
+            ->end()
+            ->tab('Auxiliar')
+            ->add('category', ModelType::class, [
+                'class' => Category::class,
+                'property' => 'name',
+                'multiple' => true
+            ])
             ->add('author', ModelType::class, [
                 'property' => 'name'
             ])
-            ->add('title', TextType::class)
-            ->add('content', TextareaType::class)
-            ->add('status', CheckboxType::class, [
-                'required' => false
-            ]);
+            ->end()
+            ->end();
+        // Form with Columns
+//        $form
+//            ->with('Conteudo', ['class' => 'col-md-9'])
+//            ->add('title', TextType::class)
+//            ->add('content', TextareaType::class)
+//            ->add('status', CheckboxType::class, [
+//                'required' => false
+//            ])
+//            ->end()
+//            ->with('Auxiliar', ['class' => 'col-md-3'])
+//            ->add('category', ModelType::class, [
+//                'class' => Category::class,
+//                'property' => 'name',
+//                'multiple' => true
+//            ])
+//            ->add('author', ModelType::class, [
+//                'property' => 'name'
+//            ])
+//            ->end();
     }
 
     protected function configureDatagridFilters(DatagridMapper $filter)
