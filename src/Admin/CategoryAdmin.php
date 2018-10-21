@@ -7,6 +7,7 @@ use App\Entity\Category;
 use Sonata\AdminBundle\Admin\AbstractAdmin;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
+use Sonata\AdminBundle\Route\RouteCollection;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 
 class CategoryAdmin extends AbstractAdmin
@@ -24,6 +25,13 @@ class CategoryAdmin extends AbstractAdmin
                 'placeholder' => 'Informe a categoria'
             ]
         ]);
+    }
+
+    protected function configureRoutes(RouteCollection $collection)
+    {
+        $collection->remove('create');
+        $collection->remove('delete');
+        $collection->remove('edit');
     }
 
     public function toString($object)
