@@ -5,6 +5,13 @@ sonata_admin:
         blocks:
             - { type: sonata.admin.block.admin_list, position: left }
 
+    assets:
+        extra_stylesheets:
+            - https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.2/jquery.fancybox.min.css
+
+        extra_javascripts:
+            - https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.2/jquery.fancybox.min.js
+
 sonata_block:
     blocks:
         sonata.admin.block.admin_list:
