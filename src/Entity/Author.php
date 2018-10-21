@@ -5,9 +5,9 @@ namespace App\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass="App\Repository\CategoryRepository")
+ * @ORM\Entity(repositoryClass="App\Repository\AuthorRepository")
  */
-class Category
+class Author
 {
     /**
      * @ORM\Id()
@@ -18,14 +18,30 @@ class Category
 
     /**
      * @var string
+     *
      * @ORM\Column(type="string")
      */
     private $name;
 
     /**
+     * @var Post
+     *
+     * @ORM\OneToMany(targetEntity="App\Entity\Post", mappedBy="author")
+     */
+    private $posts;
+
+    /**
+     * @return mixed
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
      * @return string
      */
-    public function getName()
+    public function getName(): ?string
     {
         return $this->name;
     }
@@ -33,7 +49,7 @@ class Category
     /**
      * @param string $name
      */
-    public function setName($name)
+    public function setName(string $name): void
     {
         $this->name = $name;
     }
@@ -41,7 +57,7 @@ class Category
     /**
      * @return Post
      */
-    public function getPosts()
+    public function getPosts(): Post
     {
         return $this->posts;
     }
@@ -49,14 +65,8 @@ class Category
     /**
      * @param Post $posts
      */
-    public function setPosts($posts)
+    public function setPosts(Post $posts): void
     {
         $this->posts = $posts;
     }
-
-    /**
-     * @var Post
-     * @ORM\ManyToMany(targetEntity="App\Entity\Post", mappedBy="category")
-     */
-    private $posts;
 }

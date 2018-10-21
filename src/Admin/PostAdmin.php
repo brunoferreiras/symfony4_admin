@@ -19,8 +19,9 @@ class PostAdmin extends AbstractAdmin
         $list->addIdentifier('title', TextType::class, [
             'label' => 'Titulo'
         ])
-            ->add('category.name', TextType::class, [
-                'label' => 'Categoria'
+            ->add('category', null, [
+                'label' => 'Categoria',
+                'associated_property' => 'name'
             ])
             ->add('status', 'boolean', [
                 'editable' => true
@@ -31,8 +32,12 @@ class PostAdmin extends AbstractAdmin
     {
         $form->add('category', ModelType::class, [
             'class' => Category::class,
-            'property' => 'name'
+            'property' => 'name',
+            'multiple' => true
         ])
+            ->add('author', ModelType::class, [
+                'property' => 'name'
+            ])
             ->add('title', TextType::class)
             ->add('content', TextareaType::class)
             ->add('status', CheckboxType::class, [

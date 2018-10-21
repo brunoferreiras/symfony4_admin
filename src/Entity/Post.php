@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\PersistentCollection;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\PostRepository")
@@ -36,9 +37,18 @@ class Post
 
     /**
      * @var Category
-     * @ORM\ManyToOne(targetEntity="App\Entity\Category", inversedBy="posts")
+     * @ORM\ManyToMany(targetEntity="App\Entity\Category", inversedBy="posts")
+     * @ORM\JoinTable(name="category_posts")
      */
     private $category;
+
+    /**
+     * @var Author
+     *
+     * @ORM\ManyToOne(targetEntity="App\Entity\Author", inversedBy="posts")
+     *
+     */
+    private $author;
 
     /**
      * @return mixed
@@ -99,7 +109,7 @@ class Post
     /**
      * @return Category
      */
-    public function getCategory()
+    public function getCategory(): ?PersistentCollection
     {
         return $this->category;
     }
@@ -111,4 +121,21 @@ class Post
     {
         $this->category = $category;
     }
+
+    /**
+     * @return Author
+     */
+    public function getAuthor(): ?Author
+    {
+        return $this->author;
+    }
+
+    /**
+     * @param Author $author
+     */
+    public function setAuthor(Author $author): void
+    {
+        $this->author = $author;
+    }
 }
+
