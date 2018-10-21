@@ -11,6 +11,7 @@ use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Form\Type\ModelListType;
 use Sonata\AdminBundle\Form\Type\ModelType;
+use Sonata\AdminBundle\Route\RouteCollection;
 use Sonata\AdminBundle\Show\ShowMapper;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
@@ -104,6 +105,11 @@ class PostAdmin extends AbstractAdmin
         ->add('status', null, [
             'label' => 'Publicado?'
         ]);
+    }
+
+    protected function configureRoutes(RouteCollection $collection)
+    {
+//        $collection->clearExcept('list');
     }
 
     public function toString($object)
