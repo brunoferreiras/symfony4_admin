@@ -8,6 +8,7 @@ use Sonata\AdminBundle\Admin\AbstractAdmin;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Route\RouteCollection;
+use Sonata\AdminBundle\Show\ShowMapper;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 
 class CategoryAdmin extends AbstractAdmin
@@ -32,6 +33,13 @@ class CategoryAdmin extends AbstractAdmin
         $collection->remove('create');
         $collection->remove('delete');
         $collection->remove('edit');
+    }
+
+    protected function configureShowFields(ShowMapper $show)
+    {
+        $show->add('name', TextType::class, [
+            'label' => 'Categoria'
+        ]);
     }
 
     public function toString($object)

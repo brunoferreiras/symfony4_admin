@@ -9,6 +9,7 @@ use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Form\Type\ModelType;
+use Sonata\AdminBundle\Show\ShowMapper;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
@@ -19,7 +20,10 @@ class PostAdmin extends AbstractAdmin
     protected function configureListFields(ListMapper $list)
     {
         $list->addIdentifier('title', TextType::class, [
-            'label' => 'Titulo'
+            'label' => 'Titulo',
+            'route' => [
+                'name' => 'show'
+            ]
         ])
             ->add('category', null, [
                 'label' => 'Categoria',
@@ -83,6 +87,26 @@ class PostAdmin extends AbstractAdmin
                 'class' => Category::class,
                 'choice_label' => 'name'
             ]);
+    }
+
+    protected function configureShowFields(ShowMapper $show)
+    {
+        $show->add('title', TextType::class, [
+            'label' => 'Título'
+        ])
+        ->add('content', TextareaType::class, [
+            'label' => 'Conteúdo'
+        ])
+        ->add('author.name', null, [
+            'label' => 'Autor'
+        ])
+        ->add('category', null, [
+            'label' => 'Categoria',
+            'associated_property' => 'name'
+        ])
+        ->add('status', null, [
+            'label' => 'Publicado?'
+        ]);
     }
 
     public function toString($object)
