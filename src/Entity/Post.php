@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use App\Application\Sonata\MediaBundle\Entity\Media;
+use App\Application\Sonata\MediaBundle\Entity\Gallery;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\PersistentCollection;
 
@@ -49,6 +51,20 @@ class Post
      *
      */
     private $author;
+
+    /**
+     * @var Media
+     *
+     * @ORM\ManyToOne(targetEntity="App\Application\Sonata\MediaBundle\Entity\Media", cascade={"persist"})
+     */
+    private $image;
+
+    /**
+     * @var Gallery
+     *
+     * @ORM\ManyToOne(targetEntity="App\Application\Sonata\MediaBundle\Entity\Gallery", cascade={"persist"})
+     */
+    private $gallery;
 
     /**
      * @return mixed
@@ -136,6 +152,38 @@ class Post
     public function setAuthor(Author $author): void
     {
         $this->author = $author;
+    }
+
+    /**
+     * @return Media
+     */
+    public function getImage(): ?Media
+    {
+        return $this->image;
+    }
+
+    /**
+     * @param Media $image
+     */
+    public function setImage(Media $image): void
+    {
+        $this->image = $image;
+    }
+
+    /**
+     * @return Gallery
+     */
+    public function getGallery(): ?Gallery
+    {
+        return $this->gallery;
+    }
+
+    /**
+     * @param Gallery $gallery
+     */
+    public function setGallery(Gallery $gallery): void
+    {
+        $this->gallery = $gallery;
     }
 }
 

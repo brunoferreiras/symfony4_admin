@@ -2,12 +2,14 @@
 
 namespace App\Admin;
 
+use App\Entity\Author;
 use App\Entity\Category;
 use App\Entity\Post;
 use Sonata\AdminBundle\Admin\AbstractAdmin;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
+use Sonata\AdminBundle\Form\Type\ModelListType;
 use Sonata\AdminBundle\Form\Type\ModelType;
 use Sonata\AdminBundle\Show\ShowMapper;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
@@ -21,13 +23,16 @@ class PostAdmin extends AbstractAdmin
     {
         $list->addIdentifier('title', TextType::class, [
             'label' => 'Titulo',
-            'route' => [
-                'name' => 'show'
-            ]
+//            'route' => [
+//                'name' => 'show'
+//            ] // Change route edit to show
         ])
             ->add('category', null, [
                 'label' => 'Categoria',
                 'associated_property' => 'name'
+            ])
+            ->add('image', null, [
+                'template' => '@SonataMedia/MediaAdmin/list_image.html.twig'
             ])
             ->add('status', 'boolean', [
                 'editable' => true
@@ -36,47 +41,39 @@ class PostAdmin extends AbstractAdmin
 
     protected function configureFormFields(FormMapper $form)
     {
-        // Form with tabs
         $form
-            ->tab('Conteudo')
-                ->with('Conteudo')
+            ->tab('Conteúdo')
+                ->with('Conteúdo')
                     ->add('title', TextType::class)
                     ->add('content', TextareaType::class)
                     ->add('status', CheckboxType::class, [
-                        'required' => false
+                        'required' => false,
                     ])
                 ->end()
             ->end()
             ->tab('Auxiliar')
-            ->add('category', ModelType::class, [
-                'class' => Category::class,
-                'property' => 'name',
-                'multiple' => true
-            ])
-            ->add('author', ModelType::class, [
-                'property' => 'name'
-            ])
+                ->with('Auxiliar')
+                    ->add('category', ModelType::class, [
+                        'class' => Category::class,
+                        'property' => 'name',
+                        'multiple' => true
+                    ])
+                    ->add('author', ModelType::class, [
+                        'class' => Author::class,
+                        'property' => 'name'
+                    ])
+                ->end()
             ->end()
+            ->tab('Mídias')
+                ->with('Mídias')
+                    ->add('image', ModelListType::class, [
+                        'label' => 'Imagem'
+                    ])
+                    ->add('gallery', ModelListType::class, [
+                        'label' => 'Galeria'
+                    ])
+                ->end()
             ->end();
-        // Form with Columns
-//        $form
-//            ->with('Conteudo', ['class' => 'col-md-9'])
-//            ->add('title', TextType::class)
-//            ->add('content', TextareaType::class)
-//            ->add('status', CheckboxType::class, [
-//                'required' => false
-//            ])
-//            ->end()
-//            ->with('Auxiliar', ['class' => 'col-md-3'])
-//            ->add('category', ModelType::class, [
-//                'class' => Category::class,
-//                'property' => 'name',
-//                'multiple' => true
-//            ])
-//            ->add('author', ModelType::class, [
-//                'property' => 'name'
-//            ])
-//            ->end();
     }
 
     protected function configureDatagridFilters(DatagridMapper $filter)
